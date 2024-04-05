@@ -1,5 +1,6 @@
 package com.lucaf.mysqlplayerlink.nativecore;
 
+import com.lucaf.mysqlplayerlink.Mysqlplayerlink;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,12 +12,20 @@ public class Events implements Listener {
         InventoryManager inventoryManager = new InventoryManager(player);
         inventoryManager.syncInventoryToRemote();
     }
+    public void getSyncData(Player player){
+        InventoryManager inventoryManager = new InventoryManager(player);
+        inventoryManager.syncInventoryFromRemote();
+    }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        sendSyncData(event.getPlayer());
+        if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-down") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")){
+            getSyncData(event.getPlayer());
+        }
     }
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
-        sendSyncData(event.getPlayer());
+        if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-up") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")){
+            sendSyncData(event.getPlayer());
+        }
     }
 }

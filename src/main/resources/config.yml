@@ -1,3 +1,7 @@
+#Server name: Set an unique server name to each server to avoid conflict
+#Example
+#If you have 2 servers, you can set server name as server1 and server2
+serverName: "server1"
 
 mysql:
   address: ""
@@ -7,3 +11,10 @@ mysql:
   database: ""
   tablePrefix: "mpl_"
   port: "3306"
+
+#Set Sync type
+# 1. sync-up: only sync to database
+# 2. sync-down: only sync from database
+# 3. sync: sync both to and from database
+sync:
+  inventory: "sync"

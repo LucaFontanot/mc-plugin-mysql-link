@@ -14,7 +14,8 @@ public class ConfigHandler {
     public String mysqlPassword;
     public String driver;
     public String mysqlTablePefix;
-
+    public String serverName;
+    public String config_type_inventories;
     public ConfigHandler(FileConfiguration config) {
         config.options().copyDefaults(true);
         mysqlAddress = config.getString("mysql.address");
@@ -24,6 +25,8 @@ public class ConfigHandler {
         mysqlPassword = config.getString("mysql.password");
         driver = config.getString("mysql.driver");
         mysqlTablePefix = config.getString("mysql.tablePrefix");
+        serverName = config.getString("serverName");
+        config_type_inventories = config.getString("sync.inventory");
     }
 
 }

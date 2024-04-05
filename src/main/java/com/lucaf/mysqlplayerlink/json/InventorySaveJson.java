@@ -3,6 +3,7 @@ package com.lucaf.mysqlplayerlink.json;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -25,7 +26,7 @@ public class InventorySaveJson  {
     double health;
     double health_scale;
     double max_health;
-    boolean is_health_scale;
+    public boolean is_health_scale;
     int food;
     float saturation;
     int air;
@@ -35,11 +36,13 @@ public class InventorySaveJson  {
     int exp_to_level;
     int exp_total;
     String potion_effects;
+    String position;
     public InventorySaveJson(Inventory inventory, int slot, int gamemode,
                              double health, double health_scale, double max_health, boolean is_health_scale,
                              int food, float saturation,
                              int air, int air_max,
-                             int level, float exp, int exp_to_level, int exp_total, Collection<PotionEffect> potion_effects) {
+                             int level, float exp, int exp_to_level, int exp_total, Collection<PotionEffect> potion_effects,
+                             Location location) {
         this.inventory = serializeInventory(inventory);
         this.gamemode = gamemode;
         this.slot = slot;
@@ -56,6 +59,7 @@ public class InventorySaveJson  {
         this.exp_to_level = exp_to_level;
         this.exp_total = exp_total;
         this.potion_effects = serializePotionEffects(potion_effects);
+        this.position = location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ();
     }
 
     public InventorySaveJson() {
