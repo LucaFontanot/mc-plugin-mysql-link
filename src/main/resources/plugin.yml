@@ -1,0 +1,4 @@
+name: mysqlplayerlink
+version: '${project.version}'
+main: com.lucaf.mysqlplayerlink.Mysqlplayerlink
+api-version: '1.20'

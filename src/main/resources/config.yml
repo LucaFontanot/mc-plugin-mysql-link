@@ -1,0 +1,9 @@
+
+mysql:
+  address: ""
+  username: ""
+  password: ""
+  driver: "com.mysql.cj.jdbc.Driver"
+  database: ""
+  tablePrefix: "mpl_"
+  port: "3306"
