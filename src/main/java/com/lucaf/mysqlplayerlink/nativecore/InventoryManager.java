@@ -39,6 +39,11 @@ public class InventoryManager {
         } else {
             player.setHealthScaled(false);
         }
+        if (Mysqlplayerlink.versionNumber>=9){
+            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(inventorySaveJson.getMax_health());
+        }else{
+            player.setMaxHealth(inventorySaveJson.getMax_health());
+        }
         player.setFoodLevel(inventorySaveJson.getFood());
         player.setSaturation(inventorySaveJson.getSaturation());
         player.setRemainingAir(inventorySaveJson.getAir());
@@ -57,7 +62,12 @@ public class InventoryManager {
 
     }
     public void syncInventoryToRemote(){
-        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        double maxHealth = 0;
+        if (Mysqlplayerlink.versionNumber>=9){
+            maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        }else{
+            maxHealth = player.getMaxHealth();
+        }
         //Fix potion effect health boost. This will be managed by the potion effect handler
         if (maxHealth>20d && player.getPotionEffect(PotionEffectType.HEALTH_BOOST)!=null){
             maxHealth = maxHealth - 4 * (player.getPotionEffect(PotionEffectType.HEALTH_BOOST).getAmplifier() + 1);

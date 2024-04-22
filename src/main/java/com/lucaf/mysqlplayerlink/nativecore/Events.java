@@ -8,24 +8,49 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Events implements Listener {
-    public void sendSyncData(Player player){
-        InventoryManager inventoryManager = new InventoryManager(player);
-        inventoryManager.syncInventoryToRemote();
-    }
-    public void getSyncData(Player player){
-        InventoryManager inventoryManager = new InventoryManager(player);
-        inventoryManager.syncInventoryFromRemote();
-    }
+
+
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-down") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")){
-            getSyncData(event.getPlayer());
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        try {
+            Player player = event.getPlayer();
+            if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-down") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")) {
+                InventoryManager inventoryManager = new InventoryManager(player);
+                //inventoryManager.syncInventoryFromRemote();
+            } else {
+                InventoryManager inventoryManager = new InventoryManager(player);
+                inventoryManager.syncInventoryToRemote();
+            }
+            if (Mysqlplayerlink.hasEssentials && (Mysqlplayerlink.config.getConfig_type_essentials().equals("sync") || Mysqlplayerlink.config.getConfig_type_essentials().equals("sync-down"))) {
+                EssentialsManager essentialsManager = new EssentialsManager(event.getPlayer());
+                //essentialsManager.syncEssentialsFromRemote();
+            } else if(Mysqlplayerlink.hasEssentials) {
+                EssentialsManager essentialsManager = new EssentialsManager(event.getPlayer());
+                essentialsManager.syncEssentialsToRemote();
+            }
+        } catch (Exception e) {
+            Mysqlplayerlink.log("Failed to sync data for player: " + event.getPlayer().getName());
+            e.printStackTrace();
         }
+
     }
+
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event){
-        if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-up") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")){
-            sendSyncData(event.getPlayer());
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        try {
+            Player player = event.getPlayer();
+
+            if (Mysqlplayerlink.config.getConfig_type_inventories().equals("sync-up") || Mysqlplayerlink.config.getConfig_type_inventories().equals("sync")) {
+                InventoryManager inventoryManager = new InventoryManager(player);
+                inventoryManager.syncInventoryToRemote();
+            }
+            if (Mysqlplayerlink.hasEssentials && (Mysqlplayerlink.config.getConfig_type_essentials().equals("sync") || Mysqlplayerlink.config.getConfig_type_essentials().equals("sync-up"))) {
+                EssentialsManager essentialsManager = new EssentialsManager(event.getPlayer());
+                essentialsManager.syncEssentialsToRemote();
+            }
+        } catch (Exception e) {
+            Mysqlplayerlink.log("Failed to sync data for player: " + event.getPlayer().getName());
+            e.printStackTrace();
         }
     }
 }

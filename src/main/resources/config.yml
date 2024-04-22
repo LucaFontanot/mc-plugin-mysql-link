@@ -17,4 +17,5 @@ mysql:
 # 2. sync-down: only sync from database
 # 3. sync: sync both to and from database
 sync:
-  inventory: "sync"
+  inventory: "sync-up"
+  essentials: "sync-up"

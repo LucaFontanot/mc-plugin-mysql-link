@@ -16,6 +16,7 @@ public class ConfigHandler {
     public String mysqlTablePefix;
     public String serverName;
     public String config_type_inventories;
+    public String config_type_essentials;
     public ConfigHandler(FileConfiguration config) {
         config.options().copyDefaults(true);
         mysqlAddress = config.getString("mysql.address");
@@ -27,6 +28,7 @@ public class ConfigHandler {
         mysqlTablePefix = config.getString("mysql.tablePrefix");
         serverName = config.getString("serverName");
         config_type_inventories = config.getString("sync.inventory");
+        config_type_essentials = config.getString("sync.essentials");
     }
 
 }
