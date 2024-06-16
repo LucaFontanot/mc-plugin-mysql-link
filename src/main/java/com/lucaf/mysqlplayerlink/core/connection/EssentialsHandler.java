@@ -1,7 +1,9 @@
 package com.lucaf.mysqlplayerlink.core.connection;
 
 import com.lucaf.mysqlplayerlink.Mysqlplayerlink;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,8 +27,17 @@ public class EssentialsHandler {
                 ") ENGINE=InnoDB;", table);
         Mysqlplayerlink.mysql.runSqlForNoResponse(sql);
     }
+    public static Plugin essentials = null;
     public static boolean doesEssentialPluginExists(){
-        return getServer().getPluginManager().getPlugin("EssentialsX") != null;
+        if (getServer().getPluginManager().getPlugin("EssentialsX") != null){
+            essentials = Bukkit.getPluginManager().getPlugin("EssentialsX");
+            return true;
+        }
+        if (getServer().getPluginManager().getPlugin("Essentials") != null){
+            essentials = Bukkit.getPluginManager().getPlugin("Essentials");
+            return true;
+        }
+        return false;
     }
     Player player;
     public EssentialsHandler(Player player) {

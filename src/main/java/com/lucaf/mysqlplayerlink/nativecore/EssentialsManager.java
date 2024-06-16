@@ -24,7 +24,7 @@ public class EssentialsManager {
     public void syncEssentialsFromRemote() {
     }
     public void syncEssentialsToRemote() {
-        File playerData = new File(Bukkit.getPluginManager().getPlugin("Essentials").getDataFolder(), Paths.get("userdata",player.getUniqueId().toString()).toString() + ".yml");
+        File playerData = new File(EssentialsHandler.essentials.getDataFolder(), Paths.get("userdata",player.getUniqueId().toString()).toString() + ".yml");
         if (playerData.exists()) {
             FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerData);
             String essentialsData = playerConfig.saveToString();
@@ -32,7 +32,5 @@ public class EssentialsManager {
         } else {
             Mysqlplayerlink.log("Essentials data does not exist for player: " + player.getName());
         }
-
-
     }
 }
